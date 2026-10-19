@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inmobiliaria Elite | Propiedades de Alto Impacto</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F172A', // Slate 900
+                        accent: '#D97706',  // Amber 600
+                        whatsapp: '#22C55E', // Emerald 500
+                        background: '#F8FAFC' // Slate 50
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome & Lucide Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-background text-slate-800 font-sans antialiased selection:bg-accent selection:text-white flex flex-col min-h-screen">
+
+    <!-- HEADER / NAVBAR -->
+    <header class="sticky top-0 z-40 bg-primary/95 backdrop-blur-md border-b border-slate-800 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="w-10 h-10 rounded-xl bg-accent flex items-center justify-center shadow-md">
+                    <i class="fa-solid fa-city text-white text-xl"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-wider uppercase block">Inmobiliaria <span class="text-accent">Elite</span></span>
+                    <span class="text-xs text-slate-400 tracking-widest block">LUXURY REAL ESTATE</span>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8 font-medium">
+                <a href="#catalogo" class="hover:text-accent transition-colors">Propiedades</a>
+                <a href="#calculadora" class="hover:text-accent transition-colors">Calculadora Hipotecaria</a>
+                <a href="#contacto" class="hover:text-accent transition-colors">Contacto</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <a href="https://wa.me/584120000000?text=Hola,%20deseo%20información%20sobre%20propiedades%20disponibles." target="_blank" class="bg-whatsapp hover:bg-emerald-600 text-white px-4 py-2.5 rounded-xl font-semibold text-sm flex items-center space-x-2 shadow-lg transition-all transform hover:scale-105">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span class="hidden sm:inline">WhatsApp Directo</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION CON BUSCADOR AVANZADO -->
+    <section class="relative bg-primary text-white py-20 px-4 sm:px-6 lg:px-8 overflow-hidden shadow-2xl">
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#D97706_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="relative max-w-5xl mx-auto text-center space-y-6">
+            <span class="bg-accent/20 text-accent border border-accent/30 text-xs uppercase px-3 py-1 rounded-full font-semibold tracking-wider">Excelencia y Exclusividad</span>
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight">Encuentra el Hogar de tus Sueños</h1>
+            <p class="text-lg text-slate-300 max-w-2xl mx-auto">Explora nuestro catálogo exclusivo de propiedades en venta y alquiler con asesoría inmobiliaria profesional de alto nivel.</p>
+
+            <!-- BARRA DE FILTROS AVANZADOS -->
+            <div class="bg-white text-slate-800 p-4 sm:p-6 rounded-2xl shadow-2xl mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-left">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Operación</label>
+                    <select id="filtroTipo" class="w-full bg-slate-100 border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-accent outline-none">
+                        <option value="">Todos (Venta/Alquiler)</option>
+                        <option value="Venta">Venta</option>
+                        <option value="Alquiler">Alquiler</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Categoría</label>
+                    <select id="filtroCategoria" class="w-full bg-slate-100 border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-accent outline-none">
+                        <option value="">Todas las Categorías</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Apto">Apartamento</option>
+                        <option value="Local">Local Comercial</option>
+                        <option value="Terreno">Terreno</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Ubicación</label>
+                    <input type="text" id="filtroUbicacion" placeholder="Ej. Norte, Costa..." class="w-full bg-slate-100 border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-accent outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Precio Máximo ($)</label>
+                    <input type="number" id="filtroPrecioMax" placeholder="Ej. 500000" class="w-full bg-slate-100 border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-accent outline-none">
+                </div>
+                <div class="flex items-end">
+                    <button onclick="cargarPropiedades()" class="w-full bg-accent hover:bg-amber-700 text-white font-bold p-3 rounded-xl transition-all shadow-md flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Filtrar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE INMUEBLES / GRID RESPONSIVO -->
+    <main id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex-grow w-full">
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h2 class="text-3xl font-bold text-primary">Propiedades Destacadas</h2>
+                <p class="text-slate-500 text-sm">Selección exclusiva de inmuebles disponibles</p>
+            </div>
+            <button onclick="limpiarFiltros()" class="text-accent hover:underline text-sm font-semibold flex items-center space-x-1">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>Reiniciar Filtros</span>
+            </button>
+        </div>
+
+        <!-- Grid Contenedor de Propiedades -->
+        <div id="propiedadesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Inyectado Dinámicamente por JavaScript -->
+        </div>
+    </main>
+
+    <!-- CALCULADORA HIPOTECARIA INTERACTIVA -->
+    <section id="calculadora" class="bg-slate-900 text-white py-16 px-4 sm:px-6 lg:px-8 border-t border-slate-800">
+        <div class="max-w-4xl mx-auto bg-slate-800 p-8 rounded-3xl shadow-2xl border border-slate-700">
+            <div class="text-center mb-8">
+                <h3 class="text-2xl font-bold text-accent">Calculadora Hipotecaria Interactiva</h3>
+                <p class="text-slate-400 text-sm">Estima tu cuota mensual de financiamiento de forma rápida y sencilla.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span>Valor del Inmueble:</span>
+                            <span id="valPropiedadLabel" class="font-bold text-accent">$200,000</span>
+                        </div>
+                        <input type="range" id="sliderValor" min="20000" max="1000000" step="5000" value="200000" class="w-full accent-accent cursor-pointer" oninput="calcularHipoteca()">
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span>Pago Inicial (Cuota Inicial):</span>
+                            <span id="valInicialLabel" class="font-bold text-accent">20% ($40,000)</span>
+                        </div>
+                        <input type="range" id="sliderInicial" min="10" max="80" step="5" value="20" class="w-full accent-accent cursor-pointer" oninput="calcularHipoteca()">
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span>Plazo del Crédito:</span>
+                            <span id="valPlazoLabel" class="font-bold text-accent">20 Años</span>
+                        </div>
+                        <input type="range" id="sliderPlazo" min="5" max="30" step="1" value="20" class="w-full accent-accent cursor-pointer" oninput="calcularHipoteca()">
+                    </div>
+                </div>
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-700 text-center flex flex-col justify-center space-y-4">
+                    <span class="text-xs uppercase tracking-widest text-slate-400">Cuota Mensual Estimada</span>
+                    <div id="resultadoCuota" class="text-4xl font-extrabold text-accent">$1,250</div>
+                    <p class="text-xs text-slate-500">* Cálculo referencial con tasa de interés anual estimada del 7.5%. No incluye gastos de cierre ni seguros.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER PROFESIONAL -->
+    <footer class="bg-primary text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-white">
+                        <i class="fa-solid fa-city"></i>
+                    </div>
+                    <span class="text-lg font-bold text-white uppercase">Inmobiliaria Elite</span>
+                </div>
+                <p class="text-sm">Tu aliado estratégico en bienes raíces de lujo. Compra, venta y alquiler con total garantía.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Enlaces Rápidos</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#catalogo" class="hover:text-accent transition-colors">Propiedades</a></li>
+                    <li><a href="#calculadora" class="hover:text-accent transition-colors">Calculadora Hipotecaria</a></li>
+                    <li><a href="#contacto" class="hover:text-accent transition-colors">Asesoría Legal</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Legal & Políticas</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-accent transition-colors">Términos y Condiciones</a></li>
+                    <li><a href="#" class="hover:text-accent transition-colors">Política de Privacidad</a></li>
+                    <li><a href="#" class="hover:text-accent transition-colors">Aviso Legal Inmobiliario</a></li>
+                </ul>
+            </div>
+            <div class="space-y-4">
+                <h4 class="text-white font-semibold">Contacto Directo</h4>
+                <p class="text-sm"><i class="fa-solid fa-phone text-accent mr-2"></i> +58 412 000-0000</p>
+                <p class="text-sm"><i class="fa-solid fa-envelope text-accent mr-2"></i> contacto@inmobiliariaelite.com</p>
+                <div class="flex space-x-4 pt-2">
+                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-accent transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-accent transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white hover:bg-accent transition-colors"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-slate-800 text-center text-xs text-slate-500">
+            &copy; 2026 Inmobiliaria Elite. Todos los derechos reservados. Desarrollado con Google Apps Script & Tailwind CSS.
+        </div>
+    </footer>
+
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/584120000000?text=Hola,%20deseo%20más%20información%20sobre%20sus%20inmuebles." target="_blank" class="fixed bottom-6 right-6 z-50 bg-whatsapp hover:bg-emerald-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-all transform hover:scale-110">
+        <i class="fa-brands fa-whatsapp text-3xl"></i>
+    </a>
+
+    <!-- MODAL DE DETALLE Y FORMULARIO -->
+    <div id="modalDetalle" class="fixed inset-0 z-50 hidden bg-primary/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative animate-fade-in">
+            <button onclick="cerrarModal()" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-700 transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div id="modalContenido" class="p-6 sm:p-8">
+                <!-- Contenido dinámico del detalle -->
+            </div>
+        </div>
+    </div>
+
+    <!-- SPINNER / MODAL DE CARGA -->
+    <div id="modalCarga" class="fixed inset-0 z-50 hidden bg-primary/70 backdrop-blur-sm flex items-center justify-center">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl flex flex-col items-center space-y-4">
+            <div class="w-12 h-12 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
+            <p class="font-semibold text-primary">Procesando solicitud...</p>
+        </div>
+    </div>
+
+    <!-- MODAL DE NOTIFICACIÓN DE ÉXITO -->
+    <div id="modalExito" class="fixed inset-0 z-50 hidden bg-primary/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4">
+            <div class="w-16 h-16 bg-emerald-500 text-white rounded-full flex items-center justify-center mx-auto text-2xl shadow-lg">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="text-xl font-bold text-primary">¡Solicitud Exitosa!</h3>
+            <p id="mensajeExitoTexto" class="text-sm text-slate-600">Tu consulta ha sido registrada correctamente. Nos pondremos en contacto contigo a la brevedad.</p>
+            <button onclick="cerrarNotificaciones()" class="w-full bg-primary hover:bg-slate-800 text-white font-semibold py-3 rounded-xl transition-colors">Aceptar</button>
+        </div>
+    </div>
+
+    <!-- MODAL DE NOTIFICACIÓN DE ERROR -->
+    <div id="modalError" class="fixed inset-0 z-50 hidden bg-primary/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center space-y-4">
+            <div class="w-16 h-16 bg-red-500 text-white rounded-full flex items-center justify-center mx-auto text-2xl shadow-lg">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-xl font-bold text-primary">Ocurrió un Error</h3>
+            <p id="mensajeErrorTexto" class="text-sm text-slate-600">No pudimos procesar tu solicitud. Por favor, verifica tu conexión e intenta nuevamente.</p>
+            <button onclick="cerrarNotificaciones()" class="w-full bg-primary hover:bg-slate-800 text-white font-semibold py-3 rounded-xl transition-colors">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT FRONTEND -->
+    <script>
+        // URL configurada de Google Apps Script
+        const API_URL = "https://script.google.com/macros/s/AKfycbyv0cXsaD_Up0THC38EQnMdKl_kVE2y_wZT6pVu6YZDlXMT5GyUbT05C1Luh19AcyhPEQ/exec";
+
+        let propiedadesGlobal = [];
+
+        // Doble capa de seguridad para conversión de imágenes de Google Drive
+        function transformarUrlFoto(url) {
+            if (!url || typeof url !== 'string') return 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6';
+            url = url.trim();
+            const patterns = [
+                /\/file\/d\/([a-zA-Z0-9_-]+)/,
+                /[?&]id=([a-zA-Z0-9_-]+)/
+            ];
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match && match[1]) {
+                    return `https://lh3.googleusercontent.com/d/${match[1]}`;
+                }
+            }
+            return url;
+        }
+
+        async function cargarPropiedades() {
+            mostrarCarga(true);
+            const tipo = document.getElementById('filtroTipo').value;
+            const categoria = document.getElementById('filtroCategoria').value;
+            const ubicacion = document.getElementById('filtroUbicacion').value;
+            const precioMax = document.getElementById('filtroPrecioMax').value;
+
+            let url = API_URL + '?';
+            if (tipo) url += `tipo=${encodeURIComponent(tipo)}&`;
+            if (categoria) url += `categoria=${encodeURIComponent(categoria)}&`;
+            if (ubicacion) url += `ubicacion=${encodeURIComponent(ubicacion)}&`;
+            if (precioMax) url += `precioMax=${encodeURIComponent(precioMax)}&`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                if (Array.isArray(data)) {
+                    propiedadesGlobal = data;
+                    renderizarGrid(data);
+                } else {
+                    console.error("Error en respuesta:", data);
+                    mostrarError("No se pudieron cargar las propiedades desde la base de datos.");
+                }
+            } catch (error) {
+                console.error("Error de red:", error);
+                mostrarError("Error de conexión con el servidor backend.");
+            } finally {
+                mostrarCarga(false);
+            }
+        }
+
+        function renderizarGrid(propiedades) {
+            const grid = document.getElementById('propiedadesGrid');
+            grid.innerHTML = '';
+
+            if (propiedades.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-16">
+                        <i class="fa-solid fa-house-chimney-crack text-5xl text-slate-300 mb-4"></i>
+                        <h3 class="text-xl font-bold text-slate-700">No se encontraron propiedades</h3>
+                        <p class="text-slate-500 text-sm mt-1">Intenta ajustar los filtros de búsqueda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            propiedades.forEach(prop => {
+                const imgUrl = transformarUrlFoto(prop.imagenPrincipal || (prop.fotosArray && prop.fotosArray[0]));
+                
+                let badgeClass = 'bg-emerald-100 text-emerald-800';
+                if (prop.estado === 'Vendido') badgeClass = 'bg-red-100 text-red-800';
+                if (prop.estado === 'Reservado') badgeClass = 'bg-amber-100 text-amber-800';
+
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 hover:shadow-2xl transition-all flex flex-col justify-between group';
+                card.innerHTML = `
+                    <div class="relative overflow-hidden h-64 bg-slate-200">
+                        <img src="${imgUrl}" alt="${prop.titulo}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6'">
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            <span class="bg-primary text-white text-xs font-bold uppercase px-3 py-1 rounded-full shadow-md">${prop.tipo}</span>
+                            <span class="${badgeClass} text-xs font-bold uppercase px-3 py-1 rounded-full shadow-md">${prop.estado}</span>
+                        </div>
+                        <div class="absolute bottom-4 right-4 bg-accent text-white font-extrabold text-lg px-4 py-1.5 rounded-2xl shadow-lg">
+                            $${Number(prop.precio).toLocaleString()}
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-accent font-semibold">${prop.categoria}</span>
+                            <h3 class="text-xl font-bold text-primary mt-1 line-clamp-1">${prop.titulo}</h3>
+                            <p class="text-slate-500 text-sm mt-1 flex items-center"><i class="fa-solid fa-location-dot text-accent mr-2"></i>${prop.ubicacion}</p>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 py-3 border-y border-slate-100 text-center text-xs text-slate-600 font-medium">
+                            <div class="flex flex-col items-center"><i class="fa-solid fa-bed text-accent mb-1"></i><span>${prop.habitaciones || 0} Habs</span></div>
+                            <div class="flex flex-col items-center"><i class="fa-solid fa-bath text-accent mb-1"></i><span>${prop.banos || 0} Baños</span></div>
+                            <div class="flex flex-col items-center"><i class="fa-solid fa-ruler-combined text-accent mb-1"></i><span>${prop.metros || 0} m²</span></div>
+                            <div class="flex flex-col items-center"><i class="fa-solid fa-car text-accent mb-1"></i><span>${prop.estacionamientos || 0} Est.</span></div>
+                        </div>
+                        <div class="flex space-x-3 pt-2">
+                            <button onclick="abrirModalDetalle('${prop.id}')" class="flex-1 bg-primary hover:bg-slate-800 text-white py-3 rounded-xl font-semibold text-sm transition-colors text-center shadow-md">
+                                Ver Detalle
+                            </button>
+                            <a href="https://wa.me/584120000000?text=Hola,%20estoy%20interesado%20en%20la%20propiedad%20[Ref:%20${prop.id}]%20-%20${encodeURIComponent(prop.titulo)}" target="_blank" class="w-12 h-12 bg-whatsapp hover:bg-emerald-600 text-white rounded-xl flex items-center justify-center transition-colors shadow-md">
+                                <i class="fa-brands fa-whatsapp text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function limpiarFiltros() {
+            document.getElementById('filtroTipo').value = '';
+            document.getElementById('filtroCategoria').value = '';
+            document.getElementById('filtroUbicacion').value = '';
+            document.getElementById('filtroPrecioMax').value = '';
+            cargarPropiedades();
+        }
+
+        function abrirModalDetalle(id) {
+            const prop = propiedadesGlobal.find(p => p.id === id);
+            if (!prop) return;
+
+            const fotos = prop.fotosArray && prop.fotosArray.length > 0 ? prop.fotosArray : [prop.imagenPrincipal];
+            
+            let galeriaHtml = `
+                <div class="space-y-4">
+                    <div class="h-80 rounded-2xl overflow-hidden shadow-lg bg-slate-200">
+                        <img id="imagenPrincipalModal" src="${transformarUrlFoto(fotos[0])}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex space-x-3 overflow-x-auto pb-2">
+            `;
+            fotos.forEach((foto) => {
+                const tFoto = transformarUrlFoto(foto);
+                galeriaHtml += `<img src="${tFoto}" onclick="document.getElementById('imagenPrincipalModal').src='${tFoto}'" class="w-20 h-20 object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-accent transition-all shadow">`;
+            });
+            galeriaHtml += `</div></div>`;
+
+            const contenido = document.getElementById('modalContenido');
+            contenido.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        ${galeriaHtml}
+                        <div class="mt-6 space-y-4">
+                            <span class="bg-accent/10 text-accent text-xs font-bold uppercase px-3 py-1 rounded-full">${prop.categoria} • ${prop.tipo}</span>
+                            <h2 class="text-2xl font-bold text-primary">${prop.titulo}</h2>
+                            <p class="text-2xl font-extrabold text-accent">$${Number(prop.precio).toLocaleString()}</p>
+                            <p class="text-slate-600 text-sm leading-relaxed">${prop.descripcion || 'Sin descripción detallada.'}</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-lg font-bold text-primary mb-2">Agendar Visita o Consultar</h3>
+                            <p class="text-xs text-slate-500 mb-4">Completa el formulario y nos pondremos en contacto contigo de inmediato.</p>
+                            
+                            <form id="formConsulta" onsubmit="enviarConsulta(event, '${prop.id}')" class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Nombre Completo</label>
+                                    <input type="text" id="nombreCliente" required class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-accent outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Teléfono WhatsApp</label>
+                                    <input type="tel" id="telefonoWhatsApp" required placeholder="+58 412..." class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-accent outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Correo Electrónico</label>
+                                    <input type="email" id="emailCliente" required class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-accent outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Mensaje / Horario Preferido</label>
+                                    <textarea id="mensajeCliente" rows="3" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-accent outline-none">Hola, me interesa agendar una visita para la propiedad Ref: ${prop.id}</textarea>
+                                </div>
+                                <button type="submit" class="w-full bg-accent hover:bg-amber-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg">
+                                    Enviar Solicitud
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('modalDetalle').classList.remove('hidden');
+        }
+
+        function cerrarModal() {
+            document.getElementById('modalDetalle').classList.add('hidden');
+        }
+
+        async function enviarConsulta(event, idPropiedad) {
+            event.preventDefault();
+            mostrarCarga(true);
+
+            const payload = {
+                idPropiedad: idPropiedad,
+                nombre: document.getElementById('nombreCliente').value,
+                telefonoWhatsApp: document.getElementById('telefonoWhatsApp').value,
+                email: document.getElementById('emailCliente').value,
+                mensaje: document.getElementById('mensajeCliente').value
+            };
+
+            try {
+                await fetch(API_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                mostrarCarga(false);
+                cerrarModal();
+                document.getElementById('modalExito').classList.remove('hidden');
+            } catch (error) {
+                console.error("Error al enviar:", error);
+                mostrarCarga(false);
+                document.getElementById('modalError').classList.remove('hidden');
+            }
+        }
+
+        // Calculadora Hipotecaria
+        function calcularHipoteca() {
+            const valor = parseFloat(document.getElementById('sliderValor').value);
+            const porcInicial = parseFloat(document.getElementById('sliderInicial').value);
+            const plazoAnios = parseFloat(document.getElementById('sliderPlazo').value);
+
+            document.getElementById('valPropiedadLabel').innerText = '$' + valor.toLocaleString();
+            document.getElementById('valInicialLabel').innerText = porcInicial + '% ($' + (valor * porcInicial / 100).toLocaleString() + ')';
+            document.getElementById('valPlazoLabel').innerText = plazoAnios + ' Años';
+
+            const montoPrestamo = valor * (1 - porcInicial / 100);
+            const tasaInteresMensual = 0.075 / 12;
+            const numeroMeses = plazoAnios * 12;
+
+            const cuota = (montoPrestamo * tasaInteresMensual * Math.pow(1 + tasaInteresMensual, numeroMeses)) / (Math.pow(1 + tasaInteresMensual, numeroMeses) - 1);
+
+            document.getElementById('resultadoCuota').innerText = '$' + Math.round(cuota).toLocaleString();
+        }
+
+        function mostrarCarga(mostrar) {
+            const modal = document.getElementById('modalCarga');
+            if (mostrar) modal.classList.remove('hidden');
+            else modal.classList.add('hidden');
+        }
+
+        function mostrarError(mensaje) {
+            document.getElementById('mensajeErrorTexto').innerText = mensaje;
+            document.getElementById('modalError').classList.remove('hidden');
+        }
+
+        function cerrarNotificaciones() {
+            document.getElementById('modalExito').classList.add('hidden');
+            document.getElementById('modalError').classList.add('hidden');
+        }
+
+        // Inicializar al cargar la página
+        window.onload = () => {
+            cargarPropiedades();
+            calcularHipoteca();
+        };
+    </script>
+</body>
+</html>
