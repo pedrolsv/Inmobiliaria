@@ -97,13 +97,20 @@ function limpiarFiltros() {
     cargarPropiedades();
 }
 
-// Abrir/Cerrar Modales de Carga
+
+// Abrir/Cerrar Modal de Carga de Inmuebles para Asesores
 function abrirModalCargaInmueble() {
-    document.getElementById('modalCargaInmueble').classList.remove('hidden');
+    const modal = document.getElementById('modalCargaInmueble');
+    if (modal) {
+        modal.classList.remove('hidden');
+    }
 }
 
 function cerrarModalCargaInmueble() {
-    document.getElementById('modalCargaInmueble').classList.add('hidden');
+    const modal = document.getElementById('modalCargaInmueble');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
 }
 
 // Guardar nuevo inmueble en Google Sheets vía Backend
