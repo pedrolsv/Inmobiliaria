@@ -218,9 +218,11 @@
                     </div>
                 </div>
 
+                <!-- CAMPO DE CARGA MÚLTIPLE DE FOTOS (GOOGLE DRIVE AUTOMÁTICO) -->
                 <div>
-                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">URL Foto Principal (Google Drive / Web)</label>
-                    <input type="url" id="nuevaFotoPrincipal" required placeholder="https://lh3.googleusercontent.com/d/..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm outline-none">
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Galería de Fotos (Seleccionar una o varias imágenes)</label>
+                    <input type="file" id="nuevasFotosArchivos" accept="image/*" multiple required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm outline-none cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-primary file:text-white hover:file:bg-slate-800">
+                    <p class="text-[10px] text-slate-400 mt-1">* La primera foto seleccionada se guardará como portada principal.</p>
                 </div>
 
                 <div>
